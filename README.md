@@ -57,9 +57,9 @@ pip install -r requirements.txt
 cd ..
 ```
 
-### 2. Configure API Key
+### 2. Configure API Key (ONE FILE ONLY!)
 
-Create a `.env` file from the template:
+Create a **single** `.env` file in the project root:
 
 ```powershell
 copy .env.example .env
@@ -68,7 +68,7 @@ copy .env.example .env
 Edit the `.env` file and add your UPB AI Gateway API key:
 
 ```env
-# Required
+# Required - Just add your API key here!
 UPB_API_KEY=sk-your-actual-api-key-here
 UPB_BASE_URL=https://ai-gateway.uni-paderborn.de/v1/
 
@@ -79,7 +79,8 @@ UPB_BASE_URL=https://ai-gateway.uni-paderborn.de/v1/
 ```
 
 > **🔑 Get your API key:** https://ai-gateway.uni-paderborn.de/  
-> **🔒 VPN Required:** Must be on University of Paderborn VPN when off-campus
+> **🔒 VPN Required:** Must be on University of Paderborn VPN when off-campus  
+> **📂 One .env file:** All services read from the root .env - no need for service-specific .env files!
 
 ### 3. Run the Application
 

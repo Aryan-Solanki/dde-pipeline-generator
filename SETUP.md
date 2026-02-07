@@ -42,9 +42,9 @@ pip install -r requirements.txt
 cd ..
 ```
 
-## Configuration (2 minutes)
+## Configuration (2 minutes) - ONE FILE ONLY!
 
-1. **Create configuration file**:
+1. **Create the main .env file** (in project root):
 ```powershell
 copy .env.example .env
 ```
@@ -60,6 +60,8 @@ Example:
 UPB_API_KEY=sk-1234567890abcdef
 UPB_BASE_URL=https://ai-gateway.uni-paderborn.de/v1/
 ```
+
+**Important:** You only need ONE .env file in the project root. All services (backend, frontend, validator) will automatically read from this single file. No need to create .env files in individual service folders!
 
 ## Running the Application (1 minute)
 

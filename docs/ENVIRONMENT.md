@@ -12,19 +12,24 @@ The simplest way to configure the application:
 
 ## Location
 
-The `.env` file should be placed in the **project root directory** (not in individual service folders).
+The `.env` file should be placed in the **project root directory ONLY** (not in individual service folders).
 
 ```
 dde-pipeline-generator/
-├── .env                 ← Place your .env file here
+├── .env                 ← ONE .env file here - that's all you need!
 ├── .env.example         ← Template
 ├── start.ps1
-├── dde-server/
-├── dde-ui/
-└── dde-validator/
+├── dde-server/          ← NO .env file needed here
+├── dde-ui/              ← NO .env file needed here
+└── dde-validator/       ← NO .env file needed here
 ```
 
-The backend automatically loads the `.env` file from the root directory.
+**All services automatically load from the root .env file:**
+- Backend (dde-server) loads via dotenv with root path
+- Frontend (dde-ui) uses Vite's automatic .env loading from root
+- Validator (dde-validator) inherits environment from parent process
+
+**You only need to configure ONE file!**
 
 ## Required Variables
 
@@ -116,27 +121,25 @@ PORT=5055
 VALIDATOR_URL=http://localhost:5056
 ```
 
-## Service-Specific Variables
+## Why Only One .env File?
 
-### Frontend (.env in dde-ui/)
-The frontend can optionally have its own `.env` file:
+Previously, each service could have its own .env file, which was confusing and redundant. Now:
 
-```env
-# Optional - defaults to http://localhost:5050
-VITE_API_URL=http://localhost:5050
-```
+✅ **Simplified Configuration:**
+- One `.env` file in the root
+- All services read from the same file
+- No confusion about which file to edit
 
-**Note**: If you don't create this file, the frontend will use the default backend URL.
+✅ **How It Works:**
+- **Backend:** Explicitly loads from `../../.env` (root directory)
+- **Frontend:** Vite automatically looks in parent directories for .env
+- **Validator:** Gets environment variables from the terminal that starts it
 
-### Validator (.env.example in dde-validator/)
-The validator service uses its own `.env` if needed:
-
-```env
-FLASK_ENV=development
-FLASK_PORT=5051
-```
-
-**Note**: Usually not needed - defaults work fine.
+✅ **What You Should NOT Do:**
+- ❌ Don't create `.env` in `dde-server/`
+- ❌ Don't create `.env` in `dde-ui/`
+- ❌ Don't create `.env` in `dde-validator/`
+- ✅ Only use the root `.env` file
 
 ## Security Best Practices
 
