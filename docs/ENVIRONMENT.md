@@ -52,7 +52,7 @@ dde-pipeline-generator/
 ### UPB_MODEL
 - **Description**: Which AI model to use for pipeline generation
 - **Required**: No
-- **Default**: `gwdg.qwen3-30b-a3b-instruct-2507x`
+- **Default**: `gwdg.qwen3-30b-a3b-instruct-2507`
 - **Options**:
   - `gwdg.qwen3-30b-a3b-instruct-2507x` - Faster, good quality (recommended)
   - `gwdg.llama-3.3-70b-instruct` - Slower, potentially higher quality
@@ -209,7 +209,7 @@ The server validates environment variables on startup:
 ```
 ✓ UPB_API_KEY found
 ✓ UPB_BASE_URL configured
-ℹ Using model: gwdg.qwen3-30b-a3b-instruct-2507x
+ℹ Using model: gwdg.qwen3-30b-a3b-instruct-2507
 ℹ Rate limit: 10 requests/minute
 ```
 

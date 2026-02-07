@@ -106,7 +106,7 @@ app.use(metricsMiddleware);
 app.use(metricsMiddleware);
 
 const PORT = Number(process.env.PORT || 5050);
-const MODEL = process.env.UPB_MODEL || "gwdg.qwen3-30b-a3b-instruct-2507x";
+const MODEL = process.env.UPB_MODEL || "gwdg.qwen3-30b-a3b-instruct-2507";
 const RPM_LIMIT = Number(process.env.RPM_LIMIT || 10);
 const VALIDATOR_URL = process.env.VALIDATOR_URL || "http://localhost:5051";
 
