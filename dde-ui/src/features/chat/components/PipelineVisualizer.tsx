@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { ArrowRight, PlayCircle, CheckCircle2, AlertCircle } from 'lucide-react';
+import { ArrowRight, PlayCircle } from 'lucide-react';
 
 interface Task {
     task_id: string;
