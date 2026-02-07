@@ -71,7 +71,14 @@ const app = express();
 
 // Security middleware - must be early in the chain
 app.use(configureHelmet());
-app.use(cors({ origin: true }));
+
+// CORS configuration
+const corsOrigin = process.env.CORS_ORIGIN || 'http://localhost:5173';
+app.use(cors({ 
+    origin: corsOrigin,
+    credentials: true
+}));
+
 app.use(express.json({ limit: REQUEST_SIZE_LIMITS.json }));
 app.use(express.urlencoded({ extended: true, limit: REQUEST_SIZE_LIMITS.urlencoded }));
 app.use(...configureSanitizers());
