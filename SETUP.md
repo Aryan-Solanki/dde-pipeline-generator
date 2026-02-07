@@ -65,28 +65,21 @@ UPB_BASE_URL=https://ai-gateway.uni-paderborn.de/v1/
 
 ## Running the Application (1 minute)
 
-**Option 1: Automatic startup (recommended)**
-```powershell
-.\start.ps1
-```
-This will open 3 windows for the services. Wait 15 seconds for everything to start.
+Open **3 separate PowerShell windows** and run each service:
 
-**Option 2: Manual startup**
-Open 3 separate PowerShell windows and run:
-
-Window 1:
+**Window 1: Validator Service**
 ```powershell
 cd dde-validator
 python app.py
 ```
 
-Window 2:
+**Window 2: Backend API**
 ```powershell
 cd dde-server
 npm run dev
 ```
 
-Window 3:
+**Window 3: Frontend UI**
 ```powershell
 cd dde-ui
 npm run dev
@@ -101,29 +94,6 @@ npm run dev
 3. **Start creating pipelines!**
 
 ## Troubleshooting
-
-### "Cannot run script - execution policy" (Windows)
-If you see this error when running `.\start.ps1`:
-```
-.\start.ps1 cannot be loaded. The file is not digitally signed.
-```
-
-**Solution 1 (Recommended):** Open PowerShell as Administrator and run:
-```powershell
-Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
-```
-
-**Solution 2:** Run the script with bypass (one time):
-```powershell
-PowerShell -ExecutionPolicy Bypass -File .\start.ps1
-```
-
-**Solution 3:** Unblock the script file:
-```powershell
-Unblock-File -Path .\start.ps1
-```
-
-After applying any solution, run `.\start.ps1` again.
 
 ### "Port already in use"
 If you see this error, close any existing instances of the services and try again. Or run:
@@ -160,15 +130,14 @@ pip install -r requirements.txt
 
 ## Stopping the Application
 
-- **If using start.ps1**: Close all 3 PowerShell windows
-- **If using manual startup**: Press `Ctrl+C` in each window, then type `y` to confirm
+Press `Ctrl+C` in each PowerShell window, then type `y` to confirm
 
 ## Summary
 
 1. Install Node.js and Python ✓
 2. Run installation commands ✓
 3. Copy and edit .env file with your API key ✓
-4. Run `.\start.ps1` ✓
+4. Start all 3 services in separate terminals ✓
 5. Open http://localhost:5173 ✓
 
 **Total time: ~15 minutes**

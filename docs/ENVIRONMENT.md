@@ -18,7 +18,6 @@ The `.env` file should be placed in the **project root directory ONLY** (not in 
 dde-pipeline-generator/
 ├── .env                 ← ONE .env file here - that's all you need!
 ├── .env.example         ← Template
-├── start.ps1
 ├── dde-server/          ← NO .env file needed here
 ├── dde-ui/              ← NO .env file needed here
 └── dde-validator/       ← NO .env file needed here

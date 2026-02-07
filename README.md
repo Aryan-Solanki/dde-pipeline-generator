@@ -21,14 +21,14 @@ cd dde-server && npm install && cd ../dde-ui && npm install && cd ../dde-validat
 copy .env.example .env
 # Edit .env and add your UPB_API_KEY
 
-# 3. Run
-.\start.ps1
+# 3. Start services (in 3 separate terminals)
+# Terminal 1: cd dde-validator && python app.py
+# Terminal 2: cd dde-server && npm run dev
+# Terminal 3: cd dde-ui && npm run dev
 
 # 4. Open browser
 # http://localhost:5173
 ```
-
-**That's it!** The application will start in 3 separate windows.
 
 | What You Need | Where to Get It |
 |---------------|----------------|
@@ -84,28 +84,22 @@ UPB_BASE_URL=https://ai-gateway.uni-paderborn.de/v1/
 
 ### 3. Run the Application
 
-**Option A: Automatic Startup (Recommended)**
-```powershell
-.\start.ps1
-```
-This opens 3 terminal windows for each service and checks their health status.
+Open **3 separate terminal windows** and run each service:
 
-**Option B: Manual Startup (3 separate terminals)**
+**Terminal 1: Validator Service**
 ```powershell
-.\start.ps1
-```
-
-**Option B: Manual start (3 separate terminals)**
-```powershell
-# Terminal 1: Validator
 cd dde-validator
 python app.py
+```
 
-# Terminal 2: Backend
+**Terminal 2: Backend API**
+```powershell
 cd dde-server
 npm run dev
+```
 
-# Terminal 3: Frontend
+**Terminal 3: Frontend UI**
+```powershell
 cd dde-ui
 npm run dev
 ```
@@ -153,7 +147,6 @@ dde-pipeline-generator/
 │   └── requirements.txt
 │
 ├── .env.example        # Environment configuration template
-├── start.ps1           # Windows startup script
 └── README.md           # This file
 ```
 
@@ -237,25 +230,6 @@ Once the backend is running, access the Swagger API documentation at:
 ---
 
 ## 🔧 Troubleshooting
-
-### PowerShell script execution policy (Windows)
-
-If you see this error when running `.\start.ps1`:
-```
-.\start.ps1 cannot be loaded. The file is not digitally signed.
-```
-
-**Fix:** Open PowerShell as Administrator and run:
-```powershell
-Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
-```
-
-Then run `.\start.ps1` again.
-
-**Alternative:** Run with bypass:
-```powershell
-PowerShell -ExecutionPolicy Bypass -File .\start.ps1
-```
 
 ### "Port already in use" error
 

@@ -76,7 +76,7 @@ export const validateGenerateRequest = [
         .trim()
         .notEmpty().withMessage('Message is required')
         .isLength({ min: 10, max: 5000 }).withMessage('Message must be between 10 and 5000 characters')
-        .matches(/^[a-zA-Z0-9\s\-_.,!?()@#$%&*+=\[\]{}:;"'\/\\]+$/).withMessage('Message contains invalid characters'),
+        .matches(/^[a-zA-Z0-9\s\-_.,!?()@#$%&*+=\[\]{}:;"'\/\\\n\r°µ±×÷]+$/).withMessage('Message contains invalid characters'),
     
     body('parameters').optional().isObject().withMessage('Parameters must be an object'),
     
