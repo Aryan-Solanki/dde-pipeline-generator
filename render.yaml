@@ -40,7 +40,6 @@ services:
   - type: web
     name: dde-frontend
     runtime: static
-    plan: free
     buildCommand: cd dde-ui && npm install && npm run build
     staticPublishPath: dde-ui/dist
     envVars:
