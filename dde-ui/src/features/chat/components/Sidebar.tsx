@@ -3,7 +3,7 @@ import { cn } from '../../../shared/lib/cn';
 import { currentUser, threadsPast, threadsTomorrow } from '../mock';
 import { Button } from '../../../shared/ui/Button';
 import { ThreadItem } from './ThreadItem';
-import { ReactNode } from 'react';
+import { type ReactNode } from 'react';
 
 export function Sidebar() {
     return (

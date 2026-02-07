@@ -1,4 +1,4 @@
-import { Workflow, Settings, CheckCircle2, Edit3 } from "lucide-react";
+import { Workflow, CheckCircle2, Edit3 } from "lucide-react";
 import { useState } from "react";
 import { Button } from "../../shared/ui/Button";
 import { Textarea } from "../../shared/ui/Textarea";

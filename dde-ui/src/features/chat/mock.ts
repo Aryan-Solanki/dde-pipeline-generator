@@ -3,7 +3,7 @@ import type { Suggestion, Thread, User } from './types';
 export const currentUser: User = {
     id: 'u1',
     name: 'Judha Maygustya',
-    plan: 'Free Plan',
+    plan: 'Free',
     avatarUrl: 'https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80',
 };
 

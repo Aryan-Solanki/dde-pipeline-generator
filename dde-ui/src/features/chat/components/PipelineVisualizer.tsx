@@ -181,7 +181,7 @@ export function PipelineVisualizer({ tasks, dagId }: PipelineVisualizerProps) {
                         </svg>
 
                         {/* Task Nodes */}
-                        {taskLayout.map((node, index) => {
+                        {taskLayout.map((node) => {
                             const task = node.task;
                             const colorClass = getOperatorColor(task.operator_type);
                             const icon = getOperatorIcon(task.operator_type);

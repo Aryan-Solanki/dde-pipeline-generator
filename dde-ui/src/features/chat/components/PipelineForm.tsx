@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Calendar, Database, Target, Tag, Clock, Upload, X } from 'lucide-react';
+import { Database, Target, Tag, Clock, Upload, X } from 'lucide-react';
 import { Button } from '../../../shared/ui/Button';
 import { Card } from '../../../shared/ui/Card';
 

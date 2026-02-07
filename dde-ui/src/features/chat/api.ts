@@ -131,8 +131,7 @@ export async function refineDAGCode(
 // Legacy function - keeping for backwards compatibility
 export async function refinePipeline(
     currentSpec: any,
-    feedback: string,
-    validation?: any
+    feedback: string
 ) {
     return refineSpecification(currentSpec, feedback);
 }

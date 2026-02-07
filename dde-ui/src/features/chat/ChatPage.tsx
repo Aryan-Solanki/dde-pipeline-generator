@@ -22,10 +22,10 @@ export function ChatPage() {
     const handleSend = async (text: string) => {
         if (isStreaming) return;
 
-        const userMsg: Message = { id: crypto.randomUUID(), role: "user", content: text };
+        const userMsg: Message = { id: crypto.randomUUID(), role: "user", content: text, timestamp: new Date() };
 
         const assistantId = crypto.randomUUID();
-        const assistantMsg: Message = { id: assistantId, role: "assistant", content: "…" };
+        const assistantMsg: Message = { id: assistantId, role: "assistant", content: "…", timestamp: new Date() };
 
         setMessages((prev) => [...prev, userMsg, assistantMsg]);
         setIsStreaming(true);
