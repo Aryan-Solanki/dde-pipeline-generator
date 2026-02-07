@@ -1,0 +1,70 @@
+services:
+  # Backend API Server (Node.js)
+  - type: web
+    name: dde-backend
+    runtime: node
+    plan: free
+    region: oregon
+    buildCommand: cd dde-server && npm install
+    startCommand: cd dde-server && node src/server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5050
+      - key: VALIDATOR_URL
+        fromService:
+          type: web
+          name: dde-validator
+          property: url
+      - key: CORS_ORIGIN
+        fromService:
+          type: web
+          name: dde-frontend
+          property: url
+      - key: MAX_FILE_SIZE_MB
+        value: 5
+      - key: AI_SERVICE_URL
+        sync: false  # Set manually in Render dashboard
+    healthCheckPath: /api/health
+
+  # Python Validator Service (Flask)
+  - type: web
+    name: dde-validator
+    runtime: python
+    plan: free
+    region: oregon
+    buildCommand: cd dde-validator && pip install -r requirements.txt
+    startCommand: cd dde-validator && gunicorn --bind 0.0.0.0:$PORT app:app
+    envVars:
+      - key: FLASK_ENV
+        value: production
+      - key: PORT
+        value: 5051
+    healthCheckPath: /health
+
+  # Frontend (React + Vite)
+  - type: web
+    name: dde-frontend
+    runtime: static
+    plan: free
+    region: oregon
+    buildCommand: cd dde-ui && npm install && npm run build
+    staticPublishPath: dde-ui/dist
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          type: web
+          name: dde-backend
+          property: url
+    headers:
+      - path: /*
+        name: X-Frame-Options
+        value: DENY
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html

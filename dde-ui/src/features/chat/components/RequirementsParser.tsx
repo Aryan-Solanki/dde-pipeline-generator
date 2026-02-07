@@ -2,6 +2,7 @@ import { Package, Check, X, AlertCircle } from "lucide-react";
 import { useState } from "react";
 import { Button } from "../../../shared/ui/Button";
 import { Textarea } from "../../../shared/ui/Textarea";
+import { config } from "../../../config";
 
 interface PackageInfo {
     name: string;
@@ -41,7 +42,7 @@ export function RequirementsParser({ onParsed }: RequirementsParserProps) {
         setError(null);
 
         try {
-            const res = await fetch('http://localhost:5050/api/files/parse-requirements', {
+            const res = await fetch(config.endpoints.filesParseRequirements, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ content })
