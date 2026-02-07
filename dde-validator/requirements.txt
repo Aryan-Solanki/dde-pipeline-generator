@@ -2,5 +2,4 @@ flask==3.0.0
 flask-cors==4.0.0
 pyyaml==6.0.1
 python-dotenv==1.0.0
-gunicorn==21.2.0
 # Note: apache-airflow requires Python 3.8-3.11. We'll use lightweight validation without full Airflow.

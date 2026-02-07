@@ -1,7 +1,6 @@
 import { Upload, File, X, Check, AlertCircle, FileCode, FileText } from "lucide-react";
 import { useState, useRef } from "react";
 import { Button } from "../../../shared/ui/Button";
-import { config } from "../../../config";
 
 interface UploadedFile {
     filename: string;
@@ -85,7 +84,7 @@ export function FileUpload({
                 const formData = new FormData();
                 formData.append('file', file);
 
-                const res = await fetch(config.endpoints.filesUpload, {
+                const res = await fetch('http://localhost:5050/api/files/upload', {
                     method: 'POST',
                     body: formData
                 });

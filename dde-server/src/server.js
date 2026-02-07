@@ -64,21 +64,21 @@ import {
 import swaggerUi from 'swagger-ui-express';
 import { swaggerSpec } from './swagger.js';
 import { createArtifactPackage, getPackageMetadata } from './artifactPackager.js';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
 
-dotenv.config();
+// Load environment variables from root .env file
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const rootDir = join(__dirname, '..', '..');
+dotenv.config({ path: join(rootDir, '.env') }); // Load from project root
+dotenv.config(); // Also load from dde-server/.env if exists (overrides root)
 
 const app = express();
 
 // Security middleware - must be early in the chain
 app.use(configureHelmet());
-
-// CORS configuration
-const corsOrigin = process.env.CORS_ORIGIN || 'http://localhost:5173';
-app.use(cors({ 
-    origin: corsOrigin,
-    credentials: true
-}));
-
+app.use(cors({ origin: true }));
 app.use(express.json({ limit: REQUEST_SIZE_LIMITS.json }));
 app.use(express.urlencoded({ extended: true, limit: REQUEST_SIZE_LIMITS.urlencoded }));
 app.use(...configureSanitizers());

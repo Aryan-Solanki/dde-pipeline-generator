@@ -1,8 +1,6 @@
-import { config } from '../../config';
-
 // Non-stream (kept as fallback)
 export async function sendChat(message: string) {
-    const res = await fetch(config.endpoints.chat, {
+    const res = await fetch("http://localhost:5050/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message }),
@@ -44,7 +42,7 @@ export async function generatePipeline(
         body = JSON.stringify({ message, parameters });
     }
 
-    const res = await fetch(config.endpoints.pipelineGenerate, {
+    const res = await fetch("http://localhost:5050/api/pipeline/generate", {
         method: "POST",
         headers,
         body,
@@ -70,7 +68,7 @@ export async function refineSpecification(
     currentSpec: any,
     userFeedback: string
 ) {
-    const res = await fetch(config.endpoints.pipelineRefineSpec, {
+    const res = await fetch("http://localhost:5050/api/pipeline/refine-spec", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ 
@@ -101,7 +99,7 @@ export async function refineDAGCode(
     userFeedback: string,
     currentSpec?: any
 ) {
-    const res = await fetch(config.endpoints.pipelineRefineCode, {
+    const res = await fetch("http://localhost:5050/api/pipeline/refine-code", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ 
@@ -141,7 +139,7 @@ export async function fixPipelineErrors(
     currentSpec: any,
     validation: any
 ) {
-    const res = await fetch(config.endpoints.pipelineFix, {
+    const res = await fetch("http://localhost:5050/api/pipeline/fix", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ 
@@ -173,7 +171,7 @@ export async function sendChatStream(
     message: string,
     onDelta: (chunk: string) => void
 ) {
-    const res = await fetch(config.endpoints.chatStream, {
+    const res = await fetch("http://localhost:5050/api/chat/stream", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message }),
@@ -220,7 +218,7 @@ export async function repairPipeline(
     currentSpec: any,
     maxIterations: number = 3
 ) {
-    const res = await fetch(config.endpoints.pipelineRepair, {
+    const res = await fetch("http://localhost:5050/api/pipeline/repair", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ 
@@ -244,7 +242,7 @@ export async function repairPipeline(
 }
 
 export async function generateDAGCode(specification: any) {
-    const res = await fetch(config.endpoints.pipelineGenerateCode, {
+    const res = await fetch("http://localhost:5050/api/pipeline/generate-code", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ specification }),
@@ -263,7 +261,7 @@ export async function generateDAGCode(specification: any) {
     };
 }
 export async function exportPackage(specification: any, additionalPackages?: string[]) {
-    const res = await fetch(config.endpoints.pipelineExport, {
+    const res = await fetch("http://localhost:5050/api/pipeline/export", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ 
