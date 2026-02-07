@@ -30,7 +30,9 @@ services:
           envVarKey: RENDER_EXTERNAL_URL
       - key: MAX_FILE_SIZE_MB
         value: 5
-      - key: AI_SERVICE_URL
+      - key: UPB_API_KEY
+        sync: false  # Set manually in Render dashboard
+      - key: UPB_BASE_URL
         sync: false  # Set manually in Render dashboard
       - key: CORS_ORIGIN
         sync: false  # Set manually after frontend is deployed
