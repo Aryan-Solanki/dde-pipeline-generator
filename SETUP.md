@@ -102,6 +102,29 @@ npm run dev
 
 ## Troubleshooting
 
+### "Cannot run script - execution policy" (Windows)
+If you see this error when running `.\start.ps1`:
+```
+.\start.ps1 cannot be loaded. The file is not digitally signed.
+```
+
+**Solution 1 (Recommended):** Open PowerShell as Administrator and run:
+```powershell
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+```
+
+**Solution 2:** Run the script with bypass (one time):
+```powershell
+PowerShell -ExecutionPolicy Bypass -File .\start.ps1
+```
+
+**Solution 3:** Unblock the script file:
+```powershell
+Unblock-File -Path .\start.ps1
+```
+
+After applying any solution, run `.\start.ps1` again.
+
 ### "Port already in use"
 If you see this error, close any existing instances of the services and try again. Or run:
 ```powershell

@@ -238,6 +238,25 @@ Once the backend is running, access the Swagger API documentation at:
 
 ## 🔧 Troubleshooting
 
+### PowerShell script execution policy (Windows)
+
+If you see this error when running `.\start.ps1`:
+```
+.\start.ps1 cannot be loaded. The file is not digitally signed.
+```
+
+**Fix:** Open PowerShell as Administrator and run:
+```powershell
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+```
+
+Then run `.\start.ps1` again.
+
+**Alternative:** Run with bypass:
+```powershell
+PowerShell -ExecutionPolicy Bypass -File .\start.ps1
+```
+
 ### "Port already in use" error
 
 Kill the process using the port:
