@@ -1,0 +1,35 @@
+{
+    "name": "dde-server",
+    "version": "1.0.0",
+    "type": "module",
+    "main": "src/server.js",
+    "scripts": {
+        "dev": "node src/server.js",
+        "test": "mocha",
+        "test:e2e": "mocha test/e2e/**/*.test.js",
+        "test:watch": "mocha --watch",
+        "test:filter": "node src/testPromptFilter.js",
+        "test:pipeline": "node src/testPipelineGeneration.js"
+    },
+    "dependencies": {
+        "archiver": "^7.0.1",
+        "cors": "^2.8.5",
+        "dotenv": "^16.4.5",
+        "express": "^4.19.2",
+        "express-mongo-sanitize": "^2.2.0",
+        "express-validator": "^7.3.1",
+        "helmet": "^8.1.0",
+        "hpp": "^0.2.3",
+        "multer": "^2.0.2",
+        "openai": "^4.0.0",
+        "swagger-jsdoc": "^6.2.8",
+        "swagger-ui-express": "^5.0.1",
+        "winston": "^3.19.0",
+        "xss-clean": "^0.1.4"
+    },
+    "devDependencies": {
+        "chai": "^6.2.2",
+        "mocha": "^11.7.5",
+        "supertest": "^7.2.2"
+    }
+}
