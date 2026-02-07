@@ -178,7 +178,7 @@ MIT License - see LICENSE file for details
 
 ## 🙏 Acknowledgments
 
-Built with ❤️ by the DDE Team
+Built with ❤️ by the Group 5 Team
 
 ---
 
