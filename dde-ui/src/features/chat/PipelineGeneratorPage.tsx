@@ -77,7 +77,7 @@ export function PipelineGeneratorPage() {
         setShowRefinementDialog(false);
 
         try {
-            const result = await refinePipeline(pipelineSpec, feedback, validationResult);
+            const result = await refinePipeline(pipelineSpec, feedback);
             setPipelineSpec(result.specification);
             setValidationResult(result.validation);
             setIterationCount(prev => prev + 1);
