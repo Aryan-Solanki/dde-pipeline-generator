@@ -55,22 +55,22 @@ $Cyan = "Cyan"
 $Blue = "Blue"
 
 Write-Host "
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+?????????????????????????????????????????????
   DDE Pipeline Generator - Starting Services
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+?????????????????????????????????????????????
 " -ForegroundColor $Cyan
 
 # Check if .env exists
 if (-not (Test-Path "$ProjectRoot\.env")) {
-    Write-Host "⚠️  Warning: .env file not found!" -ForegroundColor $Yellow
+    Write-Host "[!] Warning: .env file not found!" -ForegroundColor $Yellow
     Write-Host ""
     Write-Host "Creating .env from template..." -ForegroundColor $Yellow
     
     if (Test-Path "$ProjectRoot\.env.example") {
         Copy-Item "$ProjectRoot\.env.example" "$ProjectRoot\.env"
-        Write-Host "✓ Created .env file" -ForegroundColor $Green
+        Write-Host "[OK] Created .env file" -ForegroundColor $Green
         Write-Host ""
-        Write-Host "⚠️  IMPORTANT: Edit .env and add your UPB_API_KEY!" -ForegroundColor $Yellow
+        Write-Host "[!] IMPORTANT: Edit .env and add your UPB_API_KEY!" -ForegroundColor $Yellow
         Write-Host "   Get your API key from: https://ai-gateway.uni-paderborn.de/" -ForegroundColor $Cyan
         Write-Host ""
         
@@ -80,14 +80,14 @@ if (-not (Test-Path "$ProjectRoot\.env")) {
             exit 1
         }
     } else {
-        Write-Host "✗ .env.example not found!" -ForegroundColor $Red
+        Write-Host "[X] .env.example not found!" -ForegroundColor $Red
         exit 1
     }
 } else {
     # Check if API key is configured
     $envContent = Get-Content "$ProjectRoot\.env" -Raw
     if ($envContent -match "UPB_API_KEY=your_api_key_here" -or $envContent -match "UPB_API_KEY=your_actual_api_key_here" -or $envContent -notmatch "UPB_API_KEY=\w+") {
-        Write-Host "⚠️  Warning: UPB_API_KEY not configured in .env!" -ForegroundColor $Yellow
+        Write-Host "[!] Warning: UPB_API_KEY not configured in .env!" -ForegroundColor $Yellow
         Write-Host "   The application will not work without a valid API key." -ForegroundColor $Yellow
         Write-Host "   Get your API key from: https://ai-gateway.uni-paderborn.de/" -ForegroundColor $Cyan
         Write-Host ""
@@ -98,7 +98,7 @@ if (-not (Test-Path "$ProjectRoot\.env")) {
             exit 1
         }
     } else {
-        Write-Host "✓ Configuration file found" -ForegroundColor $Green
+        Write-Host "[OK] Configuration file found" -ForegroundColor $Green
     }
 }
 
@@ -122,7 +122,7 @@ foreach ($port in $portsToCheck.Keys) {
 }
 
 if ($portsInUse.Count -gt 0) {
-    Write-Host "⚠️  Warning: The following ports are already in use:" -ForegroundColor $Yellow
+    Write-Host "[!] Warning: The following ports are already in use:" -ForegroundColor $Yellow
     foreach ($port in $portsInUse) {
         Write-Host "   - $port" -ForegroundColor $Yellow
     }
@@ -135,7 +135,7 @@ if ($portsInUse.Count -gt 0) {
                 Stop-Process -Id $conn.OwningProcess -Force -ErrorAction SilentlyContinue
             }
         }
-        Write-Host "✓ Killed existing processes" -ForegroundColor $Green
+        Write-Host "[OK] Killed existing processes" -ForegroundColor $Green
         Start-Sleep -Seconds 2
     }
 }
@@ -157,17 +157,18 @@ function Start-Service {
     
     $fullPath = Join-Path $ProjectRoot $WorkingDir
     if (-not (Test-Path $fullPath)) {
-        Write-Host " ✗" -ForegroundColor $Red
+        Write-Host " [X]" -ForegroundColor $Red
         Write-Host "    Error: Directory not found: $fullPath" -ForegroundColor $Red
         return $false
     }
     
     try {
-        Start-Process powershell -ArgumentList "-NoExit", "-Command", "cd '$fullPath'; Write-Host '`n$Name Service`n' -ForegroundColor $Color; $Command" -WindowStyle Normal
-        Write-Host " ✓" -ForegroundColor $Green
+        $cmd = "cd '$fullPath'; Write-Host '`n$Name Service`n' -ForegroundColor $Color; $Command"
+        Start-Process powershell -ArgumentList "-NoExit", "-Command", $cmd -WindowStyle Normal
+        Write-Host " [OK]" -ForegroundColor $Green
         return $true
     } catch {
-        Write-Host " ✗" -ForegroundColor $Red
+        Write-Host " [X]" -ForegroundColor $Red
         Write-Host "    Error: $_" -ForegroundColor $Red
         return $false
     }
@@ -189,11 +190,11 @@ foreach ($svc in $services) {
 }
 
 Write-Host ""
-Write-Host "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" -ForegroundColor $Cyan
+Write-Host "?????????????????????????????????????????????" -ForegroundColor $Cyan
 
 if ($successCount -eq 3) {
     Write-Host ""
-    Write-Host "✓ All services started successfully!" -ForegroundColor $Green
+    Write-Host "[OK] All services started successfully!" -ForegroundColor $Green
     Write-Host ""
     Write-Host "  Please wait 10-15 seconds for services to initialize..." -ForegroundColor $Yellow
     Write-Host ""
@@ -206,7 +207,7 @@ if ($successCount -eq 3) {
     Write-Host ""
     Write-Host "  To stop: Close all PowerShell windows or press Ctrl+C in each" -ForegroundColor $Cyan
     Write-Host ""
-    Write-Host "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" -ForegroundColor $Cyan
+    Write-Host "?????????????????????????????????????????????" -ForegroundColor $Cyan
     Write-Host ""
     
     # Wait a bit then check health
@@ -220,32 +221,32 @@ if ($successCount -eq 3) {
     Write-Host "  Validator (5051): " -NoNewline
     try {
         $null = Invoke-RestMethod -Uri "http://localhost:5051/health" -TimeoutSec 3 -ErrorAction Stop
-        Write-Host "✓ Running" -ForegroundColor $Green
+        Write-Host "[OK] Running" -ForegroundColor $Green
     } catch {
-        Write-Host "⚠ Starting..." -ForegroundColor $Yellow
+        Write-Host "[...] Starting..." -ForegroundColor $Yellow
     }
     
     # Check backend
     Write-Host "  Backend   (5050): " -NoNewline
     try {
         $null = Invoke-RestMethod -Uri "http://localhost:5050/api/health" -TimeoutSec 3 -ErrorAction Stop
-        Write-Host "✓ Running" -ForegroundColor $Green
+        Write-Host "[OK] Running" -ForegroundColor $Green
     } catch {
-        Write-Host "⚠ Starting..." -ForegroundColor $Yellow
+        Write-Host "[...] Starting..." -ForegroundColor $Yellow
     }
     
     # Check frontend
     Write-Host "  Frontend  (5173): " -NoNewline
     try {
         $null = Invoke-WebRequest -Uri "http://localhost:5173" -UseBasicParsing -TimeoutSec 3 -ErrorAction Stop
-        Write-Host "✓ Running" -ForegroundColor $Green
+        Write-Host "[OK] Running" -ForegroundColor $Green
     } catch {
         # Check port 5174 (Vite fallback)
         try {
             $null = Invoke-WebRequest -Uri "http://localhost:5174" -UseBasicParsing -TimeoutSec 3 -ErrorAction Stop
-            Write-Host "✓ Running on port 5174" -ForegroundColor $Green
+            Write-Host "[OK] Running on port 5174" -ForegroundColor $Green
         } catch {
-            Write-Host "⚠ Starting..." -ForegroundColor $Yellow
+            Write-Host "[...] Starting..." -ForegroundColor $Yellow
         }
     }
     
@@ -254,10 +255,10 @@ if ($successCount -eq 3) {
     Write-Host ""
 } else {
     Write-Host ""
-    Write-Host "⚠️  Some services failed to start" -ForegroundColor $Yellow
+    Write-Host "[!] Some services failed to start" -ForegroundColor $Yellow
     Write-Host "   Check the error messages above" -ForegroundColor $Yellow
     Write-Host ""
 }
 
 Write-Host "Press any key to close this window..." -ForegroundColor $Cyan
-$null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+$null = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown')
