@@ -1359,18 +1359,24 @@ app.post("/api/pipeline/generate-code",
 
         // Call Python DAG generator via subprocess
         const { spawn } = await import('child_process');
+        const fs = await import('fs');
         
         return new Promise((resolve, reject) => {
-            // Determine Python path
-            const pythonPath = process.platform === 'win32' 
-                ? path.join('..', 'dde-validator', 'venv', 'Scripts', 'python.exe')
-                : path.join('..', 'dde-validator', 'venv', 'bin', 'python');
+            // Determine Python path (try venv first, fall back to system python)
+            const venvPythonPath = process.platform === 'win32' 
+                ? path.resolve(__dirname, '..', '..', 'dde-validator', 'venv', 'Scripts', 'python.exe')
+                : path.resolve(__dirname, '..', '..', 'dde-validator', 'venv', 'bin', 'python');
             
-            const scriptPath = path.join('..', 'dde-validator', 'dag_generator.py');
+            const pythonPath = fs.existsSync(venvPythonPath) ? venvPythonPath : 'python';
+            const scriptPath = path.resolve(__dirname, '..', '..', 'dde-validator', 'dag_generator.py');
+            
+            // Add validator directory to PYTHONPATH
+            const validatorDir = path.resolve(__dirname, '..', '..', 'dde-validator');
             
             const proc = spawn(pythonPath, ['-c', `
 import sys
 import json
+sys.path.insert(0, '${validatorDir.replace(/\\/g, '\\\\')}')
 from dag_generator import generate_dag_code
 
 spec = json.loads(sys.stdin.read())
@@ -1380,6 +1386,7 @@ print(code)
 
             let stdout = '';
             let stderr = '';
+            let responseSent = false;
 
             proc.stdin.write(JSON.stringify(specification));
             proc.stdin.end();
@@ -1393,7 +1400,10 @@ print(code)
             });
 
             proc.on('close', (code) => {
+                if (responseSent) return;
+                
                 if (code !== 0) {
+                    responseSent = true;
                     logError(new Error('Python DAG generation failed'), {
                         context: 'Code generation subprocess',
                         dag_id: specification.dag_id,
@@ -1415,6 +1425,7 @@ print(code)
 
                 trackPipelineOperation('codeGenerated');
 
+                responseSent = true;
                 res.json({
                     success: true,
                     code: stdout,
@@ -1428,14 +1439,20 @@ print(code)
             });
 
             proc.on('error', (err) => {
+                if (responseSent) return;
+                responseSent = true;
+                
                 logError(err, {
                     context: 'Code generation process spawn',
                     dag_id: specification.dag_id,
                     python_path: pythonPath
                 });
                 res.status(500).json({ 
-                    error: "Failed to spawn Python process",
-                    details: err.message
+                    error: "Failed to spawn Python process. Make sure Python is installed and accessible.",
+                    details: err.message,
+                    hint: pythonPath === 'python' 
+                        ? "Virtual environment not found. Either create it in dde-validator/venv or ensure Python is in your PATH."
+                        : `Could not find Python at: ${pythonPath}`
                 });
             });
         });

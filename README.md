@@ -15,14 +15,14 @@ AI-powered Apache Airflow DAG pipeline generation with intelligent validation, r
 
 ```powershell
 # 1. Install dependencies
-cd dde-server && npm install && cd ../dde-ui && npm install && cd ../dde-validator && pip install -r requirements.txt && cd ..
+cd dde-server && npm install && cd ../dde-ui && npm install && cd ../dde-validator && python -m venv venv && .\venv\Scripts\Activate.ps1 && pip install -r requirements.txt && cd ..
 
 # 2. Configure API key
 copy .env.example .env
 # Edit .env and add your UPB_API_KEY
 
 # 3. Start services (in 3 separate terminals)
-# Terminal 1: cd dde-validator && python app.py
+# Terminal 1: cd dde-validator && .\venv\Scripts\Activate.ps1 && python app.py
 # Terminal 2: cd dde-server && npm run dev
 # Terminal 3: cd dde-ui && npm run dev
 
@@ -52,6 +52,9 @@ cd ../dde-ui
 npm install
 
 cd ../dde-validator
+python -m venv venv
+.\venv\Scripts\Activate.ps1  # On Windows
+# source venv/bin/activate     # On macOS/Linux
 pip install -r requirements.txt
 
 cd ..
@@ -89,6 +92,7 @@ Open **3 separate terminal windows** and run each service:
 **Terminal 1: Validator Service**
 ```powershell
 cd dde-validator
+.\venv\Scripts\Activate.ps1  # Activate venv first
 python app.py
 ```
 
@@ -263,6 +267,7 @@ npm install
 
 # Validator
 cd dde-validator
+.\venv\Scripts\Activate.ps1
 pip install -r requirements.txt --force-reinstall
 ```
 
@@ -344,20 +349,7 @@ If you encounter any issues or have questions:
 
 **Made with ❤️ for Data Engineering**
 
-# Terminal 2: Backend Server
-cd dde-server
-npm run dev
-
-# Terminal 3: Frontend
-cd dde-ui
-npm run dev
-```
-
-Access the application at:
-- **Frontend**: http://localhost:5173
-- **Backend API**: http://localhost:5050
-- **Validator**: http://localhost:5051
-- **API Docs**: http://localhost:5050/api-docs
+---
 
 ## 📖 Documentation
 
@@ -376,6 +368,7 @@ npm test
 
 # Validator tests
 cd dde-validator
+.\venv\Scripts\Activate.ps1
 python -m pytest
 ```
 

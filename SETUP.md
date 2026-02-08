@@ -36,6 +36,8 @@ npm install
 
 # Install validator dependencies
 cd ..\dde-validator
+python -m venv venv
+.\venv\Scripts\Activate.ps1
 pip install -r requirements.txt
 
 # Go back to project root
@@ -70,6 +72,7 @@ Open **3 separate PowerShell windows** and run each service:
 **Window 1: Validator Service**
 ```powershell
 cd dde-validator
+.\venv\Scripts\Activate.ps1
 python app.py
 ```
 
